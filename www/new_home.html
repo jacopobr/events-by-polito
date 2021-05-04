@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/custom_style.css">
+  <script src="onsenui/js/onsenui.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="js/jquery.min.js"></script>
+  <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+
+
+
+
+  
+</head>
+
+<body onload="all_events()">
+	<ons-navigator id = "navigator" page="template.html"></ons-navigator>
+
+<template id ="template.html">
+
+<ons-page id ="home_page" class ="eventi">
+    <ons-toolbar id = "change">
+      <div id = "itabutton" class="left"><ons-button id = "ita" modifier = "quiet" style ="color:#ffffff" onclick="SetLanguage(this.id)">ITA</ons-button></div>
+      <div class="center" id = "NavBarTitle">Events</div>
+      <div id = "engbutton" class="right"><ons-button id = "eng" modifier = "quiet" style ="color:#ffffff" onclick="SetLanguage(this.id)">ENG</ons-button></div>
+    </ons-toolbar>
+
+      <ons-tabbar class = "footer"  style ="font-family: 'Montserrat', sans-serif;">
+          <ons-tab id ="EventsLabel" page="eventi.html" label="Events" icon="md-home" active></ons-tab>
+          <ons-tab id = "tickets_page" onclick ="check(this.id)" page="tickets.html" label="Tickets" icon="md-assignment"></ons-tab>
+          <ons-tab id = "UserLabel" onclick ="check()" page="user.html" label="User" icon="md-account-circle"></ons-tab> 
+      </ons-tabbar>
+      <div class = "footer"></div>
+  </ons-page>	
+
+</template>
+
+<!--Pagina Eventi -->
+<template id="eventi.html">
+	    <ons-page id="eventi">
+	      <ons-list>
+	        <ons-list-item expandable id ="expandable" >
+	         <strong id = "category_name" style="color: #ffffff;" style ="font-family: 'Montserrat', sans-serif;"></strong>
+	          <div class="expandable-content">
+	            <ons-list style ="font-family: 'Montserrat', sans-serif;">
+	              <ons-list-item class = "lista_espandibile" id = "all" onclick ="all_events()"tappable>All</ons-list-item>
+	              <ons-list-item class = "lista_espandibile" id = "music" onclick ="music()"tappable>Music</ons-list-item>
+	              <ons-list-item class = "lista_espandibile" id = "sport"  onclick ="sport()"tappable>Sport</ons-list-item>
+                <ons-list-item class = "lista_espandibile" id = "theatre" onclick ="theatre()"tappable>Theatre</ons-list-item>
+                <ons-list-item class = "lista_espandibile" id = "culture" onclick ="culture()"tappable>Culture</ons-list-item>
+                <ons-list-item class = "lista_espandibile" id = "cinema" onclick ="cinema()" tappable>Movies</ons-list-item>
+                <ons-list-item class = "lista_espandibile" id = "others" onclick = "others()" tappable>Other</ons-list-item>
+	            </ons-list>
+	          </div>
+	        </ons-list-item>
+        </ons-list>
+	      <ons-list id ="eventi_lista" style="background-color: #ffffff;"></ons-list>
+	    </ons-page>
+</template>
+
+<!--Pagina Evento_singolo -->
+<template id = "evento_singolo.html">
+    <ons-page id = "evento_singolo" class ="page__background">
+      <ons-toolbar>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="center" id = "event_title"></div>
+        <div class ="right">
+          <ons-button id ="shareButton" modifier = "quiet" onclick="window.plugins.socialsharing.share('Hi! I found this event. Look at it! \nhomeserverngg.ddns.net/event/'+this.value+'/')"><ons-icon icon ="md-share" style ="color:#ffffff;"></ons-icon></ons-button>
+        </div>
+      </ons-toolbar>
+      <img id="copertina_evento" style ="width:100%"></img>
+      <ons-card>
+        <div class = "descrizione">
+          <div class="section_title">
+              <p><ons-icon icon ="md-info-outline" style ="color:#581c0c;"></ons-icon><strong id = "description_subtitle" style="color:#581c0c;">  Content</strong></p>
+          </div>
+          <div id="descrizione" align="justify"></div>
+        </div>
+
+        <hr style="width:100%;text-align:center;">
+
+        <div class ="date_and_time">
+          <div class = "section_title">
+            <p><ons-icon icon ="md-alarm" style ="color:#581c0c;"></ons-icon><strong id = "date_time" style="color:#581c0c;">  Date and time</strong></p>
+            <p id = "date"></p>
+            <p id = "time_from"></p>
+            <p id = "time_to"></p>
+        </div>
+
+        <hr style="width:100%;text-align:center;">
+
+        <div class="Ubicazione">
+            <div class ="section_title">
+            <p><ons-icon icon="md-pin-drop" style ="color:#581c0c;"></ons-icon><strong id = "where" style="color:#581c0c;">  Location</strong></p>
+            <p id ="luogo"></p>
+            <p id ="citta"></p>
+            <p id = "indirizzo"></p>
+          <iframe id ="google_maps_frame" height="250" frameborder="0" style="border:0;width:100%" allowfullscreen></iframe>
+        </div>
+        </div>
+
+        <hr style="width:100%;text-align:center;">
+        
+        <div class = "tickets">
+          <div class = "section_title">
+            <p><ons-icon icon="md-book" style ="color:#581c0c;"></ons-icon><strong id ="tickets_sp_label" style="color:#581c0c;">  Tickets</strong></p>
+          </div>
+          <ons-list id ="tickets_list" style="background-color: #ffffff;"></ons-list>
+          <p></p>
+          <div class = "section_title">
+            <p><strong id = "TotalPrice" style="color:#581c0c;">  Total price: 0€</strong></p>
+            <p><ons-button id ="bookTickets" modifier="outline" align = "center" ripple onclick = "bookTickets()">Book now, pay later!</ons-button></p>
+          </div>
+        </div>
+
+
+
+        <hr style="width:100%;text-align:center;">
+
+        <div class ="Created_by">
+          <div class ="section_title">
+          <p><strong id = "createdby" style="color:#581c0c;">Created by:</strong></p>
+          <p id = "promoter"><b></b></p>
+          </div>
+        </div>
+
+
+      </ons-card>
+    </ons-page>
+</template>
+
+
+<!--PAGINA PRENOTAZIONI-->
+  <template id="tickets.html">
+      <ons-page id ="Biglietti">
+        <ons-list id ="sold_list" style="background-color: #ffffff;"></ons-list>
+      </ons-page>
+  </template>
+
+<template id = "SinglePurchase.html">
+  <ons-page id ="SinglePurchase" class ="page__background">
+    <ons-toolbar>
+      <div class="left"><ons-back-button></ons-back-button></div>
+      <div class="center">Tickets</div>
+    </ons-toolbar>
+    <div id ="TicketsCarousel">
+      <ons-carousel swipeable auto-scroll overscrollable >
+        <div class="ons-swiper-target" id="carouselTickets"></div>
+      </ons-carousel>
+    </div>
+    <p style="text-align:center" id = "altribiglietti"></p>
+  </ons-card>
+  </ons-page>
+</template>
+
+
+
+
+<!--PAGINA UTENTE E IMPOSTAZIONI-->
+  <template id="user.html">
+    <ons-page id="user">
+      <ons-page>
+        <ons-card class = "profile" style ="height: 95%;">
+          <img  id = "ProfilePic" class ="profile__image" alt="default_user_img">
+          <div id ="FirstName" class ="profile__name"></div>
+          <div id ="Email" class ="profile__title"></div>
+          <br><br>
+          <div style = 'float:left;width:100%;height:30px'>
+            <ons-button id = "ContactUs" modifier="outline" style = "font-family: 'Montserrat', sans-serif; width: 100%;" onclick="window.location.href='mailto:eventsbypolito@gmail.com?subject=Problema'"></ons-button>
+          </div>
+          <div style = 'float:left;width:100%;height:30px'></div>
+          <ons-button modifier="outline" style = "width: 100%;font-family: 'Montserrat', sans-serif" onclick ="logout()">Logout</ons-button>
+        </div>
+          <div style = 'clear:both;'></div>
+        <br><br>
+        <p style = "font-size: 12px;"> Made by: Braccio Jacopo, Naggi Giulio, Polidori Brendan David</p>
+        </ons-card>
+      </ons-page>
+    </ons-page>
+  </template>
+
+
+
+  <template id ="login.html">
+	    <ons-page id = "login" class ="login">
+        <ons-toolbar>
+          <div class="center">Login</div>
+        </ons-toolbar>
+        <ons-card style ="height: 97%;">
+          <div style="text-align: center; margin-top: 5%">
+                      <!--USERNAME INPUT GROUP-->
+              <ons-icon icon = "md-face" size="5x" style="color:#CA5116"></ons-icon>
+              <div class="form-group">
+                <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">
+                              <span class="fa fa-user"></span>
+                          </span>                    
+                      </div>
+                      <input type="email" id="username" class="form-control" placeholder="E-mail" required="required">
+                  </div>   
+              </div>
+            <!--Password INPUT GROUP-->
+            <div class="form-group">
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="fa fa-lock"></i>
+                      </span>                    
+                  </div>
+                  <input type="password" id = "password" class="form-control" placeholder="Password" required="required">
+              </div>
+          </div>      
+          <!---->
+            <ons-button modifier = "outline" class = "login-button" onclick="login()" modifier = "quiet">Login</ons-button>
+        </div>
+        <div style = "text-align: center;"><p id = "WrongCredentialsDialog" style = "color:#581c0c;"></p></div>
+        <div style="text-align: center;margin-top: 10%;">
+          <p><ons-button id ="Signup" modifier = "outline" style ="width:70%" onclick="Register()">Register</ons-button></p>
+          <p><ons-button id = "ForgotPassword" modifier = "outline" style ="width:70%"onclick="forgetPassword()">Forgot password?</ons-button></p>
+          <p><ons-button id = "Jump" modifier = "outline" style ="width:70%"onclick="skip()">Skip</ons-button></p>
+        </div>
+        <div style = 'clear:both;'></div>
+      </ons-card>
+    </ons-page>
+  </template>
+
+
+
+  <ons-alert-dialog id="ConfirmBooking">
+    <div class="alert-dialog-title">Done!</div>
+    <div class="alert-dialog-content">
+      <img src = "img/done.jpg" style ="width:30%">
+      <p>Your reservation has been placed correctly.</p>
+    </div>
+    <div class="alert-dialog-footer">
+      <ons-alert-dialog-button onclick="hideAlertDialog()">OK</ons-alert-dialog-button>
+    </div>
+  </ons-alert-dialog>
+
+  <ons-alert-dialog id="WrongCredentials">
+    <div class="alert-dialog-title">Error!</div>
+    <div class="alert-dialog-content">
+      <p>Wrong credentials.</p>
+    </div>
+    <div class="alert-dialog-footer">
+      <ons-alert-dialog-button onclick="hideAlertDialog()">OK</ons-alert-dialog-button>
+    </div>
+  </ons-alert-dialog>
+
+  <ons-alert-dialog id="NoTickets">
+    <div class="alert-dialog-title">Not valid!</div>
+    <div class="alert-dialog-content">
+      <p>You must select at least one ticket.</p>
+    </div>
+    <div class="alert-dialog-footer">
+      <ons-alert-dialog-button onclick="hideAlertDialog()">OK</ons-alert-dialog-button>
+    </div>
+  </ons-alert-dialog>
+
+
+
+  <script>
+    if (ons.platform.isIPhoneX()) { // Utility function
+  // Add empty attribute to the <html> element
+  document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
+  
+  }
+  </script>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/functions_ui.js"></script>
+  <script type="text/javascript" src ="js/FetchEvents.js"></script>
+  <script type="text/javascript" src ="js/SingleEventPage.js"></script>
+  <script type="text/javascript" src ="js/SocialSharing.js"></script>
+  <script type="text/javascript" src ="js/Login.js"></script>
+  <script type="text/javascript" src="js/TicketsPage.js"></script>
+  <script type="text/javascript" src="js/QRCode.js"></script>
+  <script type="text/javascript" src="js/Dictionary.js"></script>
+
+</body>
+</html>
