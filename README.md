@@ -2,7 +2,7 @@
 Project and Laboratory on Embedded Communication Systems - ICT4SS @politecnicoditorino - 2019/2020
 Developed in collaboration with Brendan David Polidori and Giulio Naggi.
 
-##Introduction 
+## Introduction 
 The proposed project aims at the creation of an event booking platform. The platform will have a catalogue with different kinds of events (musical, cultural, movies, etc.) inserted by some promoters. Clients can access the catalogue through different devices (mobile phone, personal computer, dedicated terminal) and book/buy tickets for the events in which they are interested in. Once the ticket is bought, it will be virtually available to the user who can then scan it through a custom-made gate, located in the event’s site, in order to access the event.
 
 This repo contains the code of the mobile application only. 
